@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - SYRA{% endblock %}
+
+{% block content %}
+<h2>Welcome, {{ user.first_name|default:user.username }}</h2>
+
+{% if not profile %}
+<div class="card">
+    <h2>Get Started</h2>
+    <p>You haven't created your medical profile yet. Create one now to generate your QR code/NFC tag.</p>
+    <a href="{% url 'profile-edit' %}" class="btn">Create Medical Profile</a>
+</div>
+{% else %}
+<div class="card">
+    <h2>Your Medical Profile</h2>
+    <p><strong>Blood Type:</strong> {{ profile.get_blood_type_display }}</p>
+    <p><strong>Chronic Diseases:</strong> {{ profile.chronic_diseases|default:"None" }}</p>
+    <p><strong>Allergies:</strong> {{ profile.allergies|default:"None" }}</p>
+    <p><strong>Emergency Notes:</strong> {{ profile.emergency_notes|default:"None" }}</p>
+    <p><strong>Public ID (for QR/NFC):</strong> {{ profile.public_id }}</p>
+    <a href="{% url 'profile-edit' %}" class="btn">Edit Profile</a>
+</div>
+
+<div class="card">
+    <h2>Quick Stats</h2>
+    <p><strong>Medications:</strong> {{ profile.medications.count }}</p>
+    <p><strong>Emergency Contacts:</strong> {{ profile.emergency_contacts.count }}/2</p>
+    <p><strong>Medical Events:</strong> {{ profile.medical_events.count }}</p>
+</div>
+
+<div class="card">
+    <h2>Your QR Code</h2>
+    <p>Share this QR code with first responders or print it on your wristband/keychain.</p>
+    <div style="background: white; padding: 1rem; display: inline-block; margin: 1rem 0;">
+        <!-- QR Code placeholder - in production, use a QR library -->
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ request.scheme }}://{{ request.get_host }}/api/profiles/scan/{{ profile.public_id }}/" 
+             alt="SYRA QR Code" 
+             style="max-width: 200px;">
+    </div>
+    <br>
+    <a href="{% url 'medications' %}" class="btn">Manage Medications</a>
+    <a href="{% url 'contacts' %}" class="btn">Manage Contacts</a>
+    <a href="{% url 'events' %}" class="btn">View History</a>
+</div>
+{% endif %}
+{% endblock %}

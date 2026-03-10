@@ -1,87 +1,69 @@
-# Active Context: Next.js Starter Template
+# Active Context: SYRA Medical ID Platform
 
 ## Current State
 
-**Template Status**: ✅ Ready for development
+**Project Status**: ✅ Django project created
 
-The template is a clean Next.js 16 starter with TypeScript and Tailwind CSS 4. It's ready for AI-assisted expansion to build any type of application.
+SYRA is a hybrid medical identification platform for the Egyptian market with NFC/QR-enabled physical devices.
 
 ## Recently Completed
 
-- [x] Base Next.js 16 setup with App Router
-- [x] TypeScript configuration with strict mode
-- [x] Tailwind CSS 4 integration
-- [x] ESLint configuration
-- [x] Memory bank documentation
-- [x] Recipe system for common features
+- [x] Created Django project structure (syra core)
+- [x] Created Accounts app with SyraUser model (14-digit Egyptian National ID)
+- [x] Created Profiles app with MedicalProfile, Medication, EmergencyContact, MedicalEvent models
+- [x] Implemented Fernet encryption for insurance images at rest
+- [x] Created emergency scan view (public UUID-based access)
+- [x] Created DRF API endpoints with JWT authentication
+- [x] Created template views for patient dashboard
+- [x] Created UI templates for profile management
 
 ## Current Structure
 
-| File/Directory | Purpose | Status |
-|----------------|---------|--------|
-| `src/app/page.tsx` | Home page | ✅ Ready |
-| `src/app/layout.tsx` | Root layout | ✅ Ready |
-| `src/app/globals.css` | Global styles | ✅ Ready |
-| `.kilocode/` | AI context & recipes | ✅ Ready |
+| Directory | Purpose |
+|-----------|---------|
+| `syra/` | Django project settings, URLs, WSGI |
+| `accounts/` | User authentication with Egyptian National ID |
+| `profiles/` | Medical profiles, medications, contacts, events |
+| `templates/` | HTML templates for web interface |
 
-## Current Focus
+## Key Features Implemented
 
-The template is ready. Next steps depend on user requirements:
+1. **Accounts App**: Extended Django User with 14-digit Egyptian National ID validation
+2. **Profiles App**: Medical profiles with UUID for NFC/QR scanning
+3. **Encryption**: Fernet encryption for insurance card images
+4. **Emergency View**: Public endpoint (`/api/profiles/scan/<uuid>/`) - excludes insurance data
+5. **Max 2 Contacts**: Enforced at both API and template level
+6. **JWT Auth**: DRF SimpleJWT for API authentication
 
-1. What type of application to build
-2. What features are needed
-3. Design/branding preferences
+## API Endpoints
 
-## Quick Start Guide
+- `POST /api/accounts/register/` - User registration
+- `POST /api/accounts/login/` - Login with National ID
+- `GET /api/accounts/profile/` - Get/Update profile
+- `GET /api/profiles/scan/<uuid>/` - Emergency scan (public)
+- `GET/POST /api/profiles/profiles/` - Medical profile CRUD
+- `GET/POST /api/profiles/medications/` - Medications CRUD
+- `GET/POST /api/profiles/contacts/` - Emergency contacts CRUD
+- `GET/POST /api/profiles/events/` - Medical events CRUD
 
-### To add a new page:
+## Web URLs
 
-Create a file at `src/app/[route]/page.tsx`:
-```tsx
-export default function NewPage() {
-  return <div>New page content</div>;
-}
+- `/dashboard/` - Patient dashboard
+- `/profile/edit/` - Edit medical profile
+- `/medications/` - Manage medications
+- `/contacts/` - Manage emergency contacts (max 2)
+- `/events/` - View medical history
+
+## To Run
+
+```bash
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
 ```
-
-### To add components:
-
-Create `src/components/` directory and add components:
-```tsx
-// src/components/ui/Button.tsx
-export function Button({ children }: { children: React.ReactNode }) {
-  return <button className="px-4 py-2 bg-blue-600 text-white rounded">{children}</button>;
-}
-```
-
-### To add a database:
-
-Follow `.kilocode/recipes/add-database.md`
-
-### To add API routes:
-
-Create `src/app/api/[route]/route.ts`:
-```tsx
-import { NextResponse } from "next/server";
-
-export async function GET() {
-  return NextResponse.json({ message: "Hello" });
-}
-```
-
-## Available Recipes
-
-| Recipe | File | Use Case |
-|--------|------|----------|
-| Add Database | `.kilocode/recipes/add-database.md` | Data persistence with Drizzle + SQLite |
-
-## Pending Improvements
-
-- [ ] Add more recipes (auth, email, etc.)
-- [ ] Add example components
-- [ ] Add testing setup recipe
 
 ## Session History
 
 | Date | Changes |
 |------|---------|
-| Initial | Template created with base setup |
+| 2026-03-10 | Created SYRA Django project with all apps |
