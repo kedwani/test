@@ -30,7 +30,7 @@ class MedicalProfile(models.Model):
         help_text='Unique UUID for NFC/QR scanning'
     )
     blood_type = models.CharField(
-        max_length=5,
+        max_length=10,
         choices=BLOOD_TYPE_CHOICES,
         default='Unknown'
     )
