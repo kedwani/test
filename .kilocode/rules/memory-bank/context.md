@@ -16,6 +16,10 @@ SYRA is a hybrid medical identification platform for the Egyptian market with NF
 - [x] Created DRF API endpoints with JWT authentication
 - [x] Created template views for patient dashboard
 - [x] Created UI templates for profile management
+- [x] Added login/register template views
+- [x] Added login/register HTML templates
+- [x] Added logout functionality
+- [x] Created database migrations
 
 ## Current Structure
 
@@ -48,6 +52,9 @@ SYRA is a hybrid medical identification platform for the Egyptian market with NF
 
 ## Web URLs
 
+- `/` or `/login/` - Login page
+- `/register/` - Registration page
+- `/logout/` - Logout
 - `/dashboard/` - Patient dashboard
 - `/profile/edit/` - Edit medical profile
 - `/medications/` - Manage medications
@@ -67,3 +74,4 @@ python manage.py runserver
 | Date | Changes |
 |------|---------|
 | 2026-03-10 | Created SYRA Django project with all apps |
+| 2026-03-10 | Added login/register template views and HTML templates |

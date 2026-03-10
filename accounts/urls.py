@@ -1,11 +1,17 @@
 """URL configuration for the Accounts API."""
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
-from .views import RegisterView, login_view, profile_view
+from . import views
 
 urlpatterns = [
-    path('register/', RegisterView.as_view(), name='register'),
-    path('login/', login_view, name='login'),
+    # API endpoints
+    path('register/', views.RegisterView.as_view(), name='register'),
+    path('login/', views.login_view, name='api-login'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('profile/', profile_view, name='profile'),
+    path('profile/', views.profile_view, name='profile'),
+    
+    # Template views
+    path('', views.login_template_view, name='login'),
+    path('register/', views.register_template_view, name='register-template'),
+    path('logout/', views.logout_view, name='logout'),
 ]
