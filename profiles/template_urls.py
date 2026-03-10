@@ -11,4 +11,6 @@ urlpatterns = [
     path('contacts/add/', template_views.contact_add_view, name='contact-add'),
     path('events/', template_views.events_view, name='events'),
     path('events/add/', template_views.event_add_view, name='event-add'),
+    # Emergency scan - HTML version for QR/NFC scanning
+    path('emergency/<uuid:public_id>/', template_views.emergency_scan_template_view, name='emergency-scan-html'),
 ]

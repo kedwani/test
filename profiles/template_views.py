@@ -157,3 +157,28 @@ def event_add_view(request):
         serializer = MedicalEventSerializer()
     
     return render(request, 'profiles/event_form.html', {'form': serializer, 'action': 'Add'})
+
+
+def emergency_scan_template_view(request, public_id):
+    """
+    Public emergency view - HTML version for NFC/QR scanning.
+    Returns life-saving data WITHOUT requiring authentication.
+    Excludes sensitive insurance/financial data.
+    """
+    try:
+        profile = MedicalProfile.objects.get(public_id=public_id)
+    except MedicalProfile.DoesNotExist:
+        return render(request, 'profiles/emergency_not_found.html', status=404)
+    
+    # Get active medications
+    medications = profile.medications.filter(is_active=True)
+    
+    # Get emergency contacts (max 2)
+    contacts = profile.emergency_contacts.all()[:2]
+    
+    context = {
+        'profile': profile,
+        'medications': medications,
+        'contacts': contacts,
+    }
+    return render(request, 'profiles/emergency_scan.html', context)
